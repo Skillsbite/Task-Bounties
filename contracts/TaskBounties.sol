@@ -1248,7 +1248,6 @@ contract TaskBounties {
         external
         onlyOwner
         isEducator(_educator)
-        learningPathEditable(_educator, _learningPathId)
     {
         learningPath[_educator][_learningPathId].task[_taskId].xp = _xp;
 
@@ -1278,7 +1277,6 @@ contract TaskBounties {
         external
         onlyOwner
         isEducator(_educator)
-        learningPathEditable(_educator, _learningPathId)
     {
         learningPath[_educator][_learningPathId].task[_taskId].name = _name;
 
@@ -1308,7 +1306,6 @@ contract TaskBounties {
         external
         onlyOwner
         isEducator(_educator)
-        learningPathEditable(_educator, _learningPathId)
     {
         learningPath[_educator][_learningPathId].task[_taskId].tags = _tags;
 
@@ -1338,7 +1335,6 @@ contract TaskBounties {
         external
         onlyOwner
         isEducator(_educator)
-        learningPathEditable(_educator, _learningPathId)
     {
         learningPath[_educator][_learningPathId].task[_taskId].deadline = _deadline;
 
@@ -1368,7 +1364,6 @@ contract TaskBounties {
         external
         onlyOwner
         isEducator(_educator)
-        learningPathEditable(_educator, _learningPathId)
     {
         learningPath[_educator][_learningPathId].task[_taskId].numberOfWinners = _numberOfWinners;
 
