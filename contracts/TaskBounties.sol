@@ -201,6 +201,18 @@ contract TaskBounties {
         uint256 timeInfo
     );
 
+    /// @notice Event emitted when an educator edited the learning path name
+    /// @param _educator Address of the educator who created the learning path
+    /// @param _learningPathId Identifier of the learning path 
+    /// @param _newName The new name of the learning path
+    /// @param timeInfo Timestamp of when the event was emitted
+    event LearningPathNameEdited(
+        address _educator,
+        uint16 _learningPathId,
+        string _newName,
+        uint256 timeInfo
+    );
+
     /// @notice Event emitted when a learning path is activated by an educator
     /// @param _educator The address of the educator who activated the learning path
     /// @param _id The unique identifier of the learning path
@@ -270,6 +282,18 @@ contract TaskBounties {
         uint16 _learningPathId,
         uint16 _taskId,
         address _educator,
+        uint256 timeInfo
+    );
+
+    /// @notice Event emitted when an admin edited the learning path name
+    /// @param _educator Address of the educator who created the learning path
+    /// @param _learningPathId Identifier of the learning path 
+    /// @param _newName The new name of the learning path
+    /// @param timeInfo Timestamp of when the event was emitted
+    event AdminEditedPathName(
+        address _educator,
+        uint16 _learningPathId,
+        string _newName,
         uint256 timeInfo
     );
 
@@ -986,6 +1010,16 @@ contract TaskBounties {
         }
     }
 
+    function editLearningPathName(uint16 _id, string calldata _name)
+        external
+        isEducator(msg.sender)
+        learningPathEditable(msg.sender, _id)
+    {
+        learningPath[msg.sender][_id].name = _name;
+
+        emit LearningPathNameEdited(msg.sender, _id, _name, block.timestamp);
+    }
+
     /**
      * @notice Inactivate a learning path by educator.
      *
@@ -1160,6 +1194,23 @@ contract TaskBounties {
         learningPath[_educator][_id].status = LearningPathStatus.Active;
 
         emit AdminActivatedPath(_educator, _id, block.timestamp);
+    }
+
+    /**
+     * @notice Edits the learning path name.
+     *
+     * @param _educator The address of the educator who created the learning path.
+     * @param _id The id of the learning path.
+     * @param _name The new name of the learning path.
+     */
+    function adminEditPathName(address _educator, uint16 _id, string memory _name)
+        external
+        onlyOwner
+        isEducator(_educator)
+    {
+        learningPath[_educator][_id].name = _name;
+
+        emit AdminEditedPathName(_educator, _id, _name, block.timestamp);
     }
 
     /**
